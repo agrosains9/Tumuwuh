@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TUMUWUH · Pemantau Kedelai</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;800&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf0dc;--cd:#fafbf1;--ink:#1f2d1b;--mu:#5f6d56;--g:#2c6a3c;--gs:#d5e6c6;--ln:#d9dfc4;--rd:#b0432b;--c0:#c98a1a;--c1:#2c6a3c;--c2:#2f6fa5;--c3:#94499a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a10;--cd:#1b2518;--ink:#e8efdb;--mu:#9aa98c;--g:#7fc68b;--gs:#25361f;--ln:#2c3a27;--rd:#ef8a6c;--c0:#e8b04a;--c1:#7fc68b;--c2:#7fb0e8;--c3:#d49ad4}}
+:root[data-theme="dark"]{--bg:#121a10;--cd:#1b2518;--ink:#e8efdb;--mu:#9aa98c;--g:#7fc68b;--gs:#25361f;--ln:#2c3a27;--rd:#ef8a6c;--c0:#e8b04a;--c1:#7fc68b;--c2:#7fb0e8;--c3:#d49ad4}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 'DM Sans',system-ui,sans-serif;padding-bottom:84px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:.2em 0}h2{font-size:21px}h3{font-size:17px}
+header{padding:14px 16px 6px;display:flex;align-items:center;justify-content:space-between;max-width:720px;margin:auto}
+.lg{font:800 23px Fraunces,Georgia,serif;color:var(--g)}
+main{padding:0 16px;max-width:720px;margin:auto}
+.cd{background:var(--cd);border:1px solid var(--ln);border-radius:16px;padding:14px;margin:10px 0}
+input,select,textarea,button{font:inherit;color:inherit}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);margin:4px 0 8px}
+label{font-size:13px;color:var(--mu)}
+.b{background:var(--g);color:var(--bg);border:0;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer}
+.b.s{background:var(--gs);color:var(--g)}.b.w{background:none;color:var(--rd);padding:6px 0}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--cd);border-top:1px solid var(--ln);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;font-size:11px;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:1px}
+nav button span{font-size:20px}nav .on{color:var(--g);font-weight:600}
+footer{text-align:center;color:var(--mu);font-size:12px;padding:16px}
+.tag{display:inline-block;padding:2px 9px;border-radius:99px;background:var(--gs);color:var(--g);font-size:12px;font-weight:600}.tag.r{background:var(--rd);color:var(--bg)}
+.big{font:800 46px Fraunces,Georgia,serif;color:var(--g);line-height:1}
+.bar{height:8px;background:var(--gs);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--g)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g2 img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}
+.ph{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--gs);color:var(--g);font-weight:600;cursor:pointer;overflow:hidden;border-radius:14px;text-align:center;font-size:13px}
+.ph img{width:100%;height:100%;object-fit:cover}.ph.ct img{object-fit:contain}
+.tm{aspect-ratio:16/9}
+.sc{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.sc>div{flex:0 0 128px;scroll-snap-align:start;font-size:12px}.sc .ph{aspect-ratio:9/16;font-size:28px;margin-bottom:4px}
+.mod{position:fixed;inset:0;background:#000a;display:flex;align-items:center;padding:16px;z-index:20}.mod .cd{width:100%;max-height:88%;overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:5px 8px;border-bottom:1px solid var(--ln);text-align:left}
+#sp{position:fixed;inset:0;z-index:50;background:var(--g);color:var(--bg);display:flex;align-items:center;justify-content:center;text-align:center;animation:fo .5s 2.3s forwards}
+@keyframes fo{to{opacity:0;visibility:hidden}}
+@media print{nav,header,footer,.np{display:none!important}body{background:#fff;color:#000;padding:0}.cd{break-inside:avoid;background:#fff}}
+</style></head><body>
+<div id="sp" onclick="this.remove()"><div><div style="font-size:54px">🌱</div><div class="lg" style="font-size:44px;color:inherit">TUMUWUH</div><p>Pemantau Pertumbuhan Kedelai</p><p style="opacity:.8">Universitas Padjadjaran, Fakultas Pertanian<br>Kelompok 9, Agrosains Kelas B</p></div></div>
+<div id="app"></div><div id="mo"></div>
+<script>
+const $=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const D=d=>new Date(d+'T00:00:00Z'),iso=d=>d.toISOString().slice(0,10);
+const tod=()=>{const n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')};
+const add=(d,n)=>iso(new Date(D(d).getTime()+n*864e5)),hst=(a,b)=>Math.round((D(b)-D(a))/864e5);
+const fm=d=>D(d).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
+const FASE=h=>h<0?'Belum tanam':h<=7?'Perkecambahan':h<=30?'Vegetatif':h<=45?'Berbunga':h<=65?'Pengisian polong':h<=85?'Pemasakan':'Panen';
+const JD=[[0,'Tanam + pupuk dasar'],[7,'Penyulaman tanaman mati'],[10,'Penyiangan pertama'],[14,'Pemupukan susulan 1'],[21,'Pengendalian hama awal'],[30,'Penyiangan kedua + pembumbunan'],[35,'Pemupukan susulan 2'],[45,'Cek hama polong'],[60,'Cek kematangan polong'],[80,'Persiapan panen']];
+const CL=['var(--c0)','var(--c1)','var(--c2)','var(--c3)'];
+const TIM=[['Ilyas Zaini Azhar','150510260073'],['Gani Abdul Basith','150510260050'],['Amhilda Atintiani Ika','150510260076'],['Aqila Rizki','150510260077'],['Halimatus Sadiah','150510260075']];
+let S={user:null,ps:[],cur:null,ab:{}},tab='p',form=0,cf=0,ph=null;
+const idb=(w,f)=>new Promise((res,rej)=>{const r=indexedDB.open('tumuwuh',1);r.onupgradeneeded=()=>r.result.createObjectStore('k');r.onerror=()=>rej();r.onsuccess=()=>{const t=r.result.transaction('k',w?'readwrite':'readonly'),q=f(t.objectStore('k'));t.oncomplete=()=>res(q.result);t.onerror=()=>rej()}});
+const sv=()=>idb(1,s=>s.put(S,'s')).catch(()=>{});
+const P=()=>S.ps.find(p=>p.id===S.cur);
+const un=(p,id)=>{const[i,k]=id.split('-');return p.t[i].n+' '+(+k+1)};
+const img=(f,max,cb)=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*k;c.height=i.height*k;c.getContext('2d').drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.7))};i.onerror=()=>{const e=$('#er');if(e)e.textContent='Foto tidak bisa dibaca. Coba foto lain (JPG atau PNG).'};i.src=r.result};r.readAsDataURL(f)};
+const pick=i=>{if(i.files[0])img(i.files[0],640,d=>{ph=d;$('#pv').innerHTML='<img src="'+d+'" style="height:90px;border-radius:10px">'})};
+const up=(i,k)=>{if(i.files[0])img(i.files[0],k=='tm'?1000:480,d=>{S.ab[k]=d;sv();R()})};
+const go=k=>{tab=k;form=0;cf=0;R();scrollTo(0,0)};
+const av=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+function agg(p){const m=p.t.map(()=>({}));p.logs.forEach(l=>{const w=Math.max(0,Math.floor(hst(p.d,l.d)/7)),t=m[+l.u.split('-')[0]];if(!t)return;t[w]=t[w]||{h:[],l:[]};if(l.h!=null)t[w].h.push(l.h);if(l.l!=null)t[w].l.push(l.l)});return m}
+function ch(p,k,ttl){const m=agg(p);let W=0,mx=1;m.forEach(t=>Object.keys(t).forEach(w=>{W=Math.max(W,+w);const v=av(t[w][k]);if(v!=null)mx=Math.max(mx,v)}));
+const X=w=>36+w*(290/Math.max(W,1)),Y=v=>170-v/mx*150;let s='<svg viewBox="0 0 340 200" style="width:100%;fill:var(--mu)" font-size="10">';
+for(let i=0;i<=4;i++){const v=mx*i/4;s+=`<line x1="36" x2="326" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--ln)"/><text x="2" y="${Y(v)+3}">${v.toFixed(0)}</text>`}
+for(let w=0;w<=W;w++)s+=`<text x="${X(w)}" y="190" text-anchor="middle">M${w}</text>`;
+m.forEach((t,i)=>{const q=Object.keys(t).map(Number).sort((a,b)=>a-b).filter(w=>av(t[w][k])!=null).map(w=>[X(w),Y(av(t[w][k]))]);if(!q.length)return;s+=`<path d="${q.map((z,j)=>(j?'L':'M')+z[0].toFixed(1)+' '+z[1].toFixed(1)).join('')}" style="fill:none;stroke:${CL[i%4]};stroke-width:2.5"/>`+q.map(z=>`<circle cx="${z[0]}" cy="${z[1]}" r="3.5" style="fill:${CL[i%4]}"/>`).join('')});
+return`<div class="cd"><h3>${ttl}</h3>${s}</svg></div>`}
+function tb(p){const m=agg(p);let W=-1;m.forEach(t=>Object.keys(t).forEach(w=>W=Math.max(W,+w)));if(W<0)return'';let r='';
+for(let w=0;w<=W;w++)r+=`<tr><td>M${w}</td>${m.map(t=>{const x=t[w],h=x&&av(x.h),l=x&&av(x.l);return`<td>${h!=null?h.toFixed(1):'–'} cm / ${l!=null?l.toFixed(1):'–'}</td>`}).join('')}</tr>`;
+return`<div class="cd" style="overflow-x:auto"><h3>Rata-rata per minggu (tinggi / daun)</h3><table><tr><th>Minggu</th>${p.t.map(t=>`<th>${E(t.n)}</th>`).join('')}</tr>${r}</table></div>`}
+const charts=p=>p.logs.length?`<div class="cd">${p.t.map((t,i)=>`<span style="color:${CL[i%4]};margin-right:12px">● ${E(t.n)}</span>`).join('')}</div>`+ch(p,'h','Rata-rata tinggi (cm) per minggu')+ch(p,'l','Rata-rata jumlah daun per minggu')+tb(p):'<div class="cd">Belum ada catatan untuk digrafikkan. Mulai dari tab Catat.</div>';
+function gal(p){const L=p.logs.filter(l=>l.f).sort((a,b)=>a.d.localeCompare(b.d));if(!L.length)return'<div class="cd">Belum ada foto. Tambahkan foto saat mencatat.</div>';const G={};L.forEach(l=>{const h=hst(p.d,l.d);(G[h]=G[h]||[]).push(l)});
+return Object.keys(G).sort((a,b)=>a-b).map(h=>`<h3>HST ${h}</h3><div class="g2">${G[h].map(l=>`<div><img src="${l.f}"><small style="color:${CL[+l.u[0]%4]}">${E(un(p,l.u))}</small></div>`).join('')}</div>`).join('')}
+const noP=()=>`<div class="cd"><h2>Belum ada praktikum</h2><p>Buat praktikum pertama, atau coba dulu dengan data contoh.</p><div class="row"><button class="b" onclick="sf(1,'p')">Buat praktikum</button><button class="b s" onclick="demo()">Data contoh</button></div><button class="b w" onclick="dat('imp')">Impor cadangan</button></div>`;
+const mrow=k=>k?`<div class="mm"><input class="nn" placeholder="Nama lengkap, NPM"></div>`:`<div class="mm"><label>Nama</label><input class="nn"><label>NPM</label><input class="pp" inputmode="numeric"></div>`;
+const onb=()=>`<main style="padding-top:24px"><h1 class="lg" style="font-size:32px">🌱 TUMUWUH</h1><p>Pemantau pertumbuhan kedelai untuk praktikum. Data tersimpan di perangkat ini.</p><div class="cd"><label>Praktikum dikerjakan secara</label><select id="md" onchange="mm()"><option value="i">Individu</option><option value="k">Kelompok</option></select><div id="kg" style="display:none"><label>Nomor kelompok</label><input id="gn" inputmode="numeric"></div><div id="ml">${mrow()}</div><button class="b s" id="am" onclick="$('#ml').insertAdjacentHTML('beforeend',mrow(1))" style="display:none">+ Tambah anggota</button><p id="er" style="color:var(--rd)"></p><div class="row"><button class="b" onclick="ok()">Mulai</button><button class="b s" onclick="R()">Kosongkan isian</button></div></div></main>`;
+const mm=()=>{const k=$('#md').value=='k';$('#kg').style.display=$('#am').style.display=k?'':'none';$('#ml').innerHTML=(k?'<label>Anggota kelompok (nama dan NPM)</label>':'')+mrow(k)};
+function ok(){const k=$('#md').value=='k',m=[...document.querySelectorAll('.mm')].map(r=>({n:r.querySelector('.nn').value.trim(),p:(r.querySelector('.pp')||{value:''}).value.trim()})).filter(x=>x.n),g=$('#gn').value.trim();
+if(!m.length||(k&&!g)){$('#er').textContent=k&&!g?'Isi nomor kelompok.':'Isi nama dan NPM.';return}
+S.user={g:k?g:null,m:k?m:[m[0]]};sv();R()}
+const pform=()=>`<div class="cd"><h2>Praktikum baru</h2><label>Judul praktikum</label><input id="fn" placeholder="Pengaruh cahaya pada kedelai"><label>Varietas</label><input id="fv" placeholder="Anjasmoro"><label>Tanggal tanam</label><input id="fd" type="date" value="${tod()}"><label>Perlakuan atau kondisi (pisahkan koma, maks. 4)</label><input id="ft" value="Kena matahari, Ternaungi"><label>Jumlah unit (polybag atau petak) per perlakuan</label><input id="fc" type="number" min="1" max="20" value="3"><p id="er" style="color:var(--rd)"></p><div class="row"><button class="b" onclick="newP()">Simpan praktikum</button><button class="b s" onclick="sf(0)">Batal</button></div></div>`;
+function newP(){const n=$('#fn').value.trim();if(!n){$('#er').textContent='Isi judul praktikum.';return}
+const c=Math.max(1,Math.min(20,+$('#fc').value||1)),t=$('#ft').value.split(',').map(s=>s.trim()).filter(Boolean).slice(0,4).map(n=>({n,c}));
+if(!t.length){$('#er').textContent='Isi minimal satu perlakuan.';return}
+const p={id:uid(),n,v:$('#fv').value.trim(),d:$('#fd').value||tod(),t,logs:[],done:{},rem:[]};S.ps.push(p);S.cur=p.id;form=0;sv();R()}
+function rec(){const p=P(),h=parseFloat($('#ch').value),l=parseInt($('#cl').value),d=$('#cdt').value;
+if(isNaN(h)&&isNaN(l)){$('#er').textContent='Isi tinggi atau jumlah daun.';return}
+if(d<p.d){$('#er').textContent='Tanggal sebelum tanggal tanam.';return}
+p.logs.push({id:uid(),u:$('#cu').value,d,h:isNaN(h)?null:h,l:isNaN(l)?null:l,n:$('#cn').value.trim(),f:ph,by:$('#cb')?$('#cb').value:''});ph=null;sv();R()}
+const dl=id=>{const p=P();p.logs=p.logs.filter(l=>l.id!=id);sv();R()};
+function del(){if(!cf){cf=1;R();return}S.ps=S.ps.filter(p=>p.id!=S.cur);S.cur=S.ps[0]?.id||null;cf=0;sv();R()}
+function ar(){const t=$('#rt').value.trim();if(!t)return;P().rem.push({id:'r'+uid(),t,d:$('#rd').value||tod(),x:0});sv();R()}
+function tg(k){const p=P();if(k[0]=='s'){const h=k.slice(1);p.done[h]=!p.done[h]}else{const r=p.rem.find(r=>r.id==k);r.x=!r.x}sv();R()}
+function rs(){if(!cf){cf=1;R();return}S={user:null,ps:[],cur:null,ab:S.ab};cf=0;tab='p';form=0;ph=null;sv();R()}
+const sf=(v,t)=>{form=v;if(t)tab=t;R()};
+const rm=k=>{const p=P();p.rem=p.rem.filter(r=>r.id!=k);sv();R()};
+function demo(){const d=add(tod(),-52),p={id:uid(),n:'Pengaruh cahaya pada kedelai (contoh)',v:'Anjasmoro',d,t:[{n:'Kena matahari',c:3},{n:'Ternaungi',c:3}],logs:[],done:{0:1,7:1,10:1,14:1,21:1},rem:[]};
+p.t.forEach((t,i)=>{for(let k=0;k<3;k++)for(let w=0;w<=7;w++)p.logs.push({id:uid(),u:i+'-'+k,d:add(d,w*7),h:+(3+w*(i?7.2:5.4)+(k-1)*(.6+w*.15)).toFixed(1),l:Math.round(2+w*(i?1.5:2.2)+k*.4),n:w==4?(i?'Batang tampak lebih kurus':'Mulai berbunga'):'',f:null,by:S.user.g?S.user.m[0].n:''})});
+S.ps.push(p);S.cur=p.id;form=0;tab='g';sv();R()}
+function dat(k){let v='',b='';
+if(k=='csv')v='praktikum,perlakuan,unit,tanggal,hst,tinggi_cm,daun,catatan,pencatat\n'+S.ps.flatMap(p=>p.logs.map(l=>[p.n,p.t[+l.u[0]].n,un(p,l.u),l.d,hst(p.d,l.d),l.h??'',l.l??'',l.n||'',l.by||''].map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(','))).join('\n');
+else if(k=='json')v=JSON.stringify(S);else b='<button class="b" onclick="imp()">Impor</button>';
+$('#mo').innerHTML=`<div class="mod"><div class="cd"><h3>${k=='csv'?'Data CSV':k=='json'?'Cadangan JSON':'Impor cadangan'}</h3><p style="color:var(--mu)">${k=='imp'?'Tempel isi cadangan JSON di bawah.':'Salin teks di bawah, lalu tempel ke Excel atau file catatan.'}</p><textarea id="dt" rows="9">${E(v)}</textarea><p id="er2" style="color:var(--rd)"></p><div class="row"><button class="b s" onclick="cp()">Salin</button>${b}<button class="b s" onclick="$('#mo').innerHTML=''">Tutup</button></div></div></div>`}
+function cp(){const t=$('#dt');t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand('copy')}}
+function imp(){try{const o=JSON.parse($('#dt').value);if(!o.ps)throw 0;S=o;S.ab=S.ab||{};sv();$('#mo').innerHTML='';R()}catch(e){$('#er2').textContent='Format cadangan tidak valid.'}}
+const V={
+p(){const p=P();if(form)return pform();if(!p)return noP();const H=hst(p.d,tod());
+return`<div class="cd"><h2>${E(p.n)}</h2><div style="color:var(--mu)">${E(p.v)} · tanam ${fm(p.d)}</div><div class="row" style="margin:12px 0"><div><div class="big">${Math.max(H,0)}</div>HST</div><div><span class="tag">${FASE(H)}</span><div class="bar" style="margin-top:10px"><i style="width:${Math.min(100,Math.max(0,H/85*100))}%"></i></div></div></div>${p.t.map((t,i)=>`<div style="color:${CL[i%4]}">● ${E(t.n)}, ${t.c} unit</div>`).join('')}</div>
+<div class="cd"><div class="row"><button class="b" onclick="sf(1)">+ Praktikum baru</button><button class="b s" onclick="demo()">Data contoh</button></div><div class="row" style="margin-top:8px"><button class="b s" onclick="go('r')">Laporan / PDF</button><button class="b s" onclick="dat('csv')">Ekspor CSV</button></div><div class="row" style="margin-top:8px"><button class="b s" onclick="dat('json')">Cadangan</button><button class="b s" onclick="dat('imp')">Impor</button></div><button class="b w" onclick="del()">${cf?'Yakin hapus? Tekan lagi':'Hapus praktikum ini'}</button></div>`},
+c(){const p=P();if(!p)return noP();
+const o=p.t.map((t,i)=>`<optgroup label="${E(t.n)}">${Array.from({length:t.c},(_,k)=>`<option value="${i}-${k}">${E(t.n)} ${k+1}</option>`).join('')}</optgroup>`).join('');
+const by=S.user.g?`<label>Pencatat</label><select id="cb">${S.user.m.map(m=>`<option>${E(m.n)}</option>`).join('')}</select>`:'';
+const L=[...p.logs].sort((a,b)=>b.d.localeCompare(a.d)).slice(0,40);
+return`<div class="cd"><h2>Catat pengamatan</h2><label>Unit</label><select id="cu">${o}</select><label>Tanggal</label><input id="cdt" type="date" value="${tod()}"><div class="row"><div><label>Tinggi (cm)</label><input id="ch" type="number" step=".1" inputmode="decimal"></div><div><label>Jumlah daun</label><input id="cl" type="number" inputmode="numeric"></div></div>${by}<label>Catatan</label><textarea id="cn" rows="2"></textarea><label class="b s" style="display:block;text-align:center;font-size:15px;margin:4px 0 8px">📷 Pilih atau ambil foto (opsional)<input type="file" accept="image/*" hidden onchange="pick(this)"></label><div id="pv"></div><p id="er" style="color:var(--rd)"></p><button class="b" onclick="rec()">Simpan catatan</button></div><h3>Riwayat</h3>`+(L.map(l=>`<div class="cd"><div class="row"><b>${E(un(p,l.u))}</b><span style="text-align:right;color:var(--mu)">HST ${hst(p.d,l.d)}, ${fm(l.d)}</span></div>${l.h!=null?l.h+' cm':''}${l.l!=null?' · '+l.l+' daun':''}${l.n?'<div>'+E(l.n)+'</div>':''}${l.f?`<img src="${l.f}" style="width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-top:6px">`:''}<div style="color:var(--mu);font-size:12px">${E(l.by)}</div><button class="b w" onclick="dl('${l.id}')">Hapus</button></div>`).join('')||'<p>Belum ada catatan.</p>')},
+g(){const p=P();return p?charts(p):noP()},
+f(){const p=P();return p?'<h2>Galeri foto</h2>'+gal(p):noP()},
+i(){const p=P();if(!p)return noP();const t=tod();
+const it=[...JD.map(([h,n])=>({k:'s'+h,n,d:add(p.d,h),x:!!p.done[h],h})),...p.rem.map(r=>({k:r.id,n:r.t,d:r.d,x:r.x,c:1}))].sort((a,b)=>a.d.localeCompare(b.d));
+return`<div class="cd"><h2>Pengingat</h2><label>Pengingat sendiri</label><input id="rt" placeholder="Mis. ukur tinggi semua polybag"><input id="rd" type="date" value="${t}"><button class="b" onclick="ar()">+ Tambah</button></div>`+it.map(r=>`<div class="cd" style="${r.x?'opacity:.55':''}"><div class="row"><label style="display:flex;gap:10px;align-items:center;font-size:15px;color:inherit"><input type="checkbox" style="width:auto;margin:0" ${r.x?'checked':''} onchange="tg('${r.k}')"><span>${E(r.n)}</span></label>${!r.x&&r.d<t?'<span class="tag r" style="flex:0 0 auto;text-align:center">Terlambat</span>':!r.x&&r.d===t?'<span class="tag" style="flex:0 0 auto;text-align:center">Hari ini</span>':''}</div><small style="color:var(--mu)">${fm(r.d)}${r.h!=null?' · HST '+r.h:''}${r.c?` · <a href="#" onclick="event.preventDefault();rm('${r.k}')">hapus</a>`:''}</small></div>`).join('')},
+t(){const A=S.ab,pk=(k,l,c='')=>`<label class="ph ${c}"><input type="file" accept="image/*" hidden onchange="up(this,'${k}')">${A[k]?`<img src="${A[k]}">`:l}</label>`;
+return`<div class="cd"><div style="display:flex;gap:12px;align-items:center"><div style="width:68px;flex:none">${pk('l1','Logo Univ','ct')}</div><div style="width:68px;flex:none">${pk('l2','Logo Fakultas','ct')}</div><div><b>Universitas Padjadjaran</b><br>Fakultas Pertanian</div></div></div>
+<div class="cd"><h2>TUMUWUH</h2><p>Alat bantu pencatatan praktikum kedelai: hitung HST dan fase tumbuh, catat tinggi dan daun, bandingkan perlakuan, dan simpan dokumentasi foto. Semua data tersimpan di perangkat ini.</p><b>Dibuat oleh Kelompok 9, Agrosains Kelas B</b><div style="margin:10px 0">${pk('tm','Foto Kelompok 9 (16:9)','tm')}</div>
+<div class="sc">${TIM.map((m,i)=>`<div>${pk('m'+i,m[0].split(' ').slice(0,2).map(w=>w[0]).join(''))}<b>${m[0]}</b><br>${m[1]}</div>`).join('')}</div></div>
+<div class="cd"><h3>Dosen pengampu</h3>Prof. Dr. Agus Susanto SP., M.Si<br>Prof. Dr. Ir. Ganjar Kurnia, DEA<br>Prof. Dr. Ir. Hj. Mieke Rochimi Setiawati, M.P.</div>
+<button class="b s" onclick="S.user=null;sv();R()">Ubah identitas pengguna</button><br><button class="b w" onclick="rs()">${cf?'Yakin hapus semua data? Tekan lagi':'Reset semua data, mulai dari awal'}</button>`},
+r(){const p=P();if(!p)return noP();const u=S.user;
+return`<div class="np" style="margin:10px 0"><div class="row"><button class="b" onclick="print()">Cetak / simpan PDF</button><button class="b s" onclick="go('p')">Kembali</button></div></div><div class="cd"><div style="color:var(--mu)">Universitas Padjadjaran, Fakultas Pertanian</div><h2>Laporan Pengamatan Kedelai</h2><b>${E(p.n)}</b><br>${E(p.v)} · tanam ${fm(p.d)} · HST ${hst(p.d,tod())} (${FASE(hst(p.d,tod()))})<br>${u.g?'Kelompok '+E(u.g):'Individu'}: ${u.m.map(m=>E(m.n)+(m.p?' ('+E(m.p)+')':'')).join(', ')}<br><small style="color:var(--mu)">Dibuat dengan TUMUWUH · Kelompok 9 Agrosains B · ${fm(tod())}</small></div>`+charts(p)+gal(p)}};
+function R(){const a=$('#app');if(!S.user){a.innerHTML=onb();return}
+const sel=S.ps.length&&tab!='t'&&tab!='r'?`<select onchange="S.cur=this.value;sv();R()">${S.ps.map(p=>`<option value="${p.id}" ${p.id==S.cur?'selected':''}>${E(p.n)}</option>`).join('')}</select>`:'';
+a.innerHTML=`<header><div class="lg">🌱 TUMUWUH</div><span class="tag">${S.user.g?'Kel. '+E(S.user.g):E(S.user.m[0].n)}</span></header><main>${sel}${V[tab]()}</main><footer>TUMUWUH · Kelompok 9 · Agrosains B</footer><nav>${[['p','🌾','Praktikum'],['c','✏️','Catat'],['g','📈','Grafik'],['f','📷','Foto'],['i','⏰','Ingat'],['t','ℹ️','Tentang']].map(([k,i,n])=>`<button class="${tab==k?'on':''}" onclick="go('${k}')"><span>${i}</span>${n}</button>`).join('')}</nav>`}
+(async()=>{const s=await idb(0,s=>s.get('s')).catch(()=>null);if(s&&s.ps)S=s;S.ab=S.ab||{};if(!P()&&S.ps[0])S.cur=S.ps[0].id;R();setTimeout(()=>$('#sp')&&$('#sp').remove(),2900)})();
+</script></body></html>
